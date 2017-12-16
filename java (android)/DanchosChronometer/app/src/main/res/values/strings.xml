@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Dancho\'s Chronometer v2</string>
+
+    <string name="action_settings">Настройки</string>
+    <string name ="intro_string">Здравейте, Пежо е най-готината кола!</string>
+    <string name ="contancts_menu_item">Контакти</string>
+</resources>
