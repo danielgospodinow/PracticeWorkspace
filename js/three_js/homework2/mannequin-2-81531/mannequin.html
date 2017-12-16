@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="human.js"></script>
+	</head>
+
+	<body>
+		<h1>"Танцът-свалка на Джони Браво"<br><small>ф.н. 81531 &ndash; група 2 &ndash; Даниел Господинов </small></h1>
+		<audio id="music" autoplay loop>
+				<source src="themeSong.mp3" type="audio/mpeg">
+		</audio>
+		<script>
+			// нагласяване на цвета и центрирането на текста с имената ви
+			document.getElementsByTagName('h1')[0].style = 'color:white; text-align:center; font-size:1.75em';
+			// рисувателно поле на цял екран
+			renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
+
+			// сцена и камера
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 2000 );
+			camera.position.set(0,3,250);
+
+			// светлини
+			var light = new THREE.DirectionalLight('lightblue',0.8);
+			light.position.set(0,1,4);
+			scene.add(light);
+			scene.add( new THREE.AmbientLight('white',0.4) );
+
+			// функция за анимиране на сцената
+			var t = 0; // време
+			function drawFrame()
+			{
+				requestAnimationFrame( drawFrame );
+				if (animate) animate(t++);
+				renderer.render( scene, camera );
+			}
+
+			// мъжага
+			colors = ['#f9cd9a','#cc7947','red','white','white','#7c533a'];
+			манекен = мъжествен();
+			манекен.position.set(0, 0, 0);
+			манекен.врът(0, 0, 0);
+
+			var topBorder = -95;
+			var bottomBorder = -65;
+			var legFrom = -60;
+
+			манекен.л_ръка.врът(0, 0, bottomBorder);
+			манекен.д_ръка.врът(0, 0, topBorder);
+
+			//жена
+			colors = ['#f9cd9a','#8e8e8e','red','red','white','red'];
+			манекенка = женствен();
+			манекенка.position.set(30, 0, 0);
+			манекенка.врът(0, 180, 0);
+			манекенка.д_ръка.врът(-50, 0, 0);
+			манекенка.д_лакът.врът(96, 0, 0);
+			манекенка.тяло.врът(5, 0, 0);
+			манекенка.л_ръка.врът(0, 0, -40);
+			манекенка.л_лакът.врът(0, 0, -110);
+			манекенка.д_крак.врът(5, 0, -10);
+			манекенка.л_крак.врът(-5, 0, 5);
+			манекенка.д_глезен.врът(0, 0, 17);
+
+			var handMovementSpeed = 8;
+
+			// анимация на човечето
+			animate = function (t)
+			{
+				манекен.л_ръка.врът(0, 0, (topBorder + bottomBorder) / 2 + (topBorder - bottomBorder) * sin(t * handMovementSpeed));
+				манекен.д_ръка.врът(0, 0, (topBorder + bottomBorder) / 2 + (topBorder - bottomBorder) * sin(t * handMovementSpeed + 180));
+
+				манекен.л_крак.врът(0, -30, (legFrom - 20) / 2 + (legFrom + 20) * sin(t * handMovementSpeed / 2)); // 0 до -60
+				манекен.д_крак.врът(0, 30, (legFrom - 20) / 2 + (legFrom + 20) * sin(t * handMovementSpeed / 2)); // 0 до 120
+
+				манекен.л_коляно.врът(0, 30, (-legFrom * 2)/2 + (-legFrom) * sin(t * handMovementSpeed / 2));
+				манекен.д_коляно.врът(0, -30, (-legFrom * 2)/2 + (-legFrom) * sin(t * handMovementSpeed / 2));
+
+				// Това е жъстът "Ти луд ли си?" на манекенката.
+				манекенка.л_китка.врът(0, sin(t * 4) * 90, 0);
+
+				манекен.position.set(-30, -5 / 2 + 8 * -sin(t * 4) - 5, 0);
+
+				scene.rotation.y += 0.015;
+			}
+
+			drawFrame();
+		</script>
+	</body>
+</html>
