@@ -17,9 +17,9 @@ testNum = 339 :: Int
 
 count_digits :: Int -> Int
 count_digits num
-    | num < 0 = count_digits (abs num)
+    | num < 0              = count_digits (abs num)
     | num >= 0 && num <= 9 = 1
-    | otherwise = 1 + count_digits (num `div` 10)
+    | otherwise            = 1 + count_digits (num `div` 10)
 
 {-
   Зад. 2. Да се дефинира процедура sum_digits :: Int -> Int, която генерира линейно
