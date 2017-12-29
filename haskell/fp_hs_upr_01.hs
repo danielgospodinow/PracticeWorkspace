@@ -29,7 +29,7 @@ count_digits num
 sum_digits :: Int -> Int
 sum_digits num
     | (num >= 0 && num <= 9) = num
-    | otherwise = (num `mod` 10) + sum_digits (num `div` 10)
+    | otherwise              = (num `mod` 10) + sum_digits (num `div` 10)
 
 {-
   Зад. 3. Да се дефинира процедура pow :: Double -> Int -> Double, която генерира линейно рекурсивен
@@ -38,7 +38,7 @@ sum_digits num
 
 pow :: Double -> Int -> Double
 pow x num
-    | num == 0 = 1
+    | num == 0  = 1
     | otherwise = x * (pow x (num-1))
 
 {-
@@ -51,7 +51,7 @@ sum_digits_iter num = helper num 0
     where
         helper :: Int -> Int -> Int
         helper num sum
-            | num == 0 = sum
+            | num == 0  = sum
             | otherwise = helper (num `div` 10) (sum + (num `mod` 10)) 
 
 {-
@@ -65,7 +65,7 @@ rev num = helper num ((count_digits num) - 1) 0
     where
         helper :: Int -> Int -> Int -> Int
         helper num numLen currNum
-            | num == 0 = currNum
+            | num == 0  = currNum
             | otherwise = helper (num `div` 10) (numLen - 1) (currNum + (num `mod` 10) * 10 ^ numLen)
 
 {-
@@ -79,6 +79,6 @@ prime num = helper 2 (ceiling (sqrt (fromIntegral num))) num
     where
         helper :: Int -> Int -> Int -> Bool
         helper from to num
-            | from == (to + 1) = True
+            | from == (to + 1)    = True
             | num `mod` from == 0 = False
-            | otherwise = helper (from + 1) to num
+            | otherwise           = helper (from + 1) to num

@@ -60,9 +60,9 @@ isPrime num = helper 2 (ceiling (sqrt (fromIntegral num))) num
     where
         helper :: Int -> Int -> Int -> Bool
         helper from to num
-            | from >= (to + 1)      = True
-            | num `mod` from == 0   = False
-            | otherwise             = helper (from + 1) to num
+            | from >= (to + 1)    = True
+            | num `mod` from == 0 = False
+            | otherwise           = helper (from + 1) to num
 
 {-
 Задача 4. Да се дефинира функцията isNarcissistic n, която приема като аргумент цялото положително
@@ -80,8 +80,8 @@ isNarcissistic n = ((getNarcSum n (getNumLen n)) == n)
             | otherwise = (n `mod` 10) ^ nLen + (getNarcSum (n `div` 10) nLen)
         getNumLen :: Int -> Int
         getNumLen num 
-            | num >= 0 && num <= 9  = 1
-            | otherwise             = 1 + (getNumLen (num `div` 10))
+            | num >= 0 && num <= 9 = 1
+            | otherwise            = 1 + (getNumLen (num `div` 10))
 
 
 {-

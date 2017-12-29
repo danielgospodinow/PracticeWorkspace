@@ -137,7 +137,7 @@ digits :: (Integral t) => t -> [t]
 digits n = helper n []
 	where
 		helper n currLst
-			| n <= 9 	= (n : currLst)
+			| n <= 9    = (n : currLst)
 			| otherwise = helper (n `div` 10) ((n `mod` 10) : currLst)
 
 
@@ -151,7 +151,7 @@ n и стойност от произволен тип x и връща спис�
 -}
 times :: (Integral t) => t -> a -> [a]
 n `times` x
-	| n <= 0	= []
+	| n <= 0    = []
 	| otherwise = x : ((n-1) `times` x)
 
 
@@ -179,15 +179,15 @@ b). Напишете функцията areCollatzSequence, която прие�
 -}
 collatz :: (Integral t) => t -> t
 collatz n
-	| n == 1			= 1
-	| n `mod` 2 == 0 	= n `div` 2
-	| otherwise			= 3 * n + 1
+	| n == 1         = 1
+	| n `mod` 2 == 0 = n `div` 2
+	| otherwise      = 3 * n + 1
 
 areCollatzSequence :: (Integral t) =>  [t] -> Bool
 areCollatzSequence xs 
-	| null xs 			= False
-	| null (tail xs) 	= True
-	| otherwise 		= (head((tail xs)) == (collatz (head xs))) && (areCollatzSequence (tail xs))
+	| null xs        = False
+	| null (tail xs) = True
+	| otherwise      = (head((tail xs)) == (collatz (head xs))) && (areCollatzSequence (tail xs))
 
 
 {-
@@ -209,18 +209,18 @@ areCollatzSequence xs
 -}
 merge :: Ord a => [a] -> [a] -> [a]
 merge xs ys
-	| null ys 					= xs
-	| null xs 					= ys
-	| (head xs) <= (head ys) 	= (head xs) : (merge (tail xs) ys)
-	| otherwise 				= (head ys) : (merge xs (tail ys))
+    | null ys                = xs
+	| null xs                = ys
+	| (head xs) <= (head ys) = (head xs) : (merge (tail xs) ys)
+	| otherwise              = (head ys) : (merge xs (tail ys))
 
 mergesort :: Ord a => [a] -> [a]
 mergesort xs = helper xs [] 0 ((length xs) - 1)
 	where
 		helper xs fhLst start end
-			| start == end			 	= xs
-			| start == (end `div` 2)	= (merge (mergesort ((head xs) : fhLst)) (mergesort (tail xs)))
-			| otherwise					= (helper (tail xs) ((head xs) : fhLst) (start + 1) end) 
+			| start == end           = xs
+			| start == (end `div` 2) = (merge (mergesort ((head xs) : fhLst)) (mergesort (tail xs)))
+			| otherwise              = (helper (tail xs) ((head xs) : fhLst) (start + 1) end) 
 
 
 
@@ -260,15 +260,15 @@ a). Напишете функцията rotate n str, която ротира н
 -}
 rotate :: Int -> [a] -> [a]
 rotate n xs
-	| null xs 	= []
-	| n <= 0 	= xs
+	| null xs   = []
+	| n <= 0    = xs
 	| otherwise = (rotate (n-1) ((tail xs) ++ [(head xs)]))
 
 rotations :: [a] -> [[a]]
 rotations xs = helper xs ((length xs) - 1) []
 	where
 		helper xs len contLst
-			| len < 0 	= contLst
+			| len < 0   = contLst
 			| otherwise = (helper xs (len-1) ((rotate len xs) : contLst))
 
 bwt :: Ord a => [a] -> [a]
