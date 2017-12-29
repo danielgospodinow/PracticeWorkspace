@@ -209,7 +209,7 @@ areCollatzSequence xs
 -}
 merge :: Ord a => [a] -> [a] -> [a]
 merge xs ys
-    | null ys                = xs
+        | null ys                = xs
 	| null xs                = ys
 	| (head xs) <= (head ys) = (head xs) : (merge (tail xs) ys)
 	| otherwise              = (head ys) : (merge xs (tail ys))
