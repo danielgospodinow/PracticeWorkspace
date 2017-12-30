@@ -2,6 +2,7 @@
 
 import Data.Char
 import Data.List
+import Data.List.Split
 {-
 I. Вектори (кортежи, tuples): има три основни разлики между векторите и масивите.
  1. Масивите се пишат с квадратни [], а векторите с кръгли () скоби.
@@ -102,9 +103,10 @@ III. Още полезни функции върху списъци:
     filterPrimePositions [2, 3, 4, 5, 6, 7] = [2, 3, 5, 7]
 -}
 filterPrimePositions :: [a] -> [a]
-filterPrimePositions xs = undefined
-
-
+filterPrimePositions xs = [(fst x) | x <- (zip xs ([2..((length xs) + 1)])), isPrime (snd x)]
+    where
+        isPrime num = null [x | x <- [2..(num-1)], num `mod` x == 0]
+        
 {-
 Задача 2. Брой на повторенията на най-малкото число в списък: Да се дефинира 
 функцията countMinimum xs, която приема несортиран списък xs, съставен само от 
@@ -116,7 +118,9 @@ filterPrimePositions xs = undefined
     countMinimum [] = 0
 -}
 countMinimum :: [Integer] -> Int
-countMinimum xs = undefined
+countMinimum xs = sum [if x == minN then 1 else 0 | x <- xs]
+    where
+        minN = (minimum xs)
 
 
 {-
@@ -127,7 +131,11 @@ countMinimum xs = undefined
     title "the souND aND tHe fuRY" = "The Sound And The Fury"
 -}
 title :: String -> String
-title str = undefined
+title str = makeStr [(fixWord word) | word <- (split str)]
+    where
+        makeStr strLst = (intercalate " " strLst)
+        fixWord str    = (toUpper (head str)) : [(toLower ch) | ch <- (tail str)]
+        split str      = (splitOn " " str)
 
 
 {-
@@ -139,7 +147,7 @@ f(x) e равно на g(y).
     images (\x -> x * x) (\x -> x + 2) [(2, 2), (1, 2), (3, 7)] = [(2, 2), (3, 7)]
 -}
 images :: (Double -> Double) -> (Double -> Double) -> [(Double, Double)] -> [(Double, Double)]
-images f g xys = undefined
+images f g xys = [xy | xy <- xys, (f (fst xy)) == (g (snd xy))]
 
 
 {-
@@ -151,44 +159,63 @@ images f g xys = undefined
     isIterator (+2) [1, 3, 4] = False
 -}
 isIterator :: (Eq a) => (a -> a) -> [a] -> Bool
-isIterator f xs = undefined
+isIterator f xs
+    | null xs   = False
+    | otherwise = helper (head xs) (tail xs)
+        where
+            helper prev xs
+                | null xs   = True
+                | otherwise = ((f prev) == (head xs)) && helper (head xs) (tail xs)
 
-
+            
 {-
 Задача 6. Панграми: напишете функция isPangram str, която проверява дали символният 
 низ str е панграма. Панграма се нарича символен низ, който съдържа всеки символ от 
 азбуката.
 
-ПримерИ: 
+Примери: 
     isPangram "The quick brown fox jumps over the lazy dog." = True
     isPangram "The quick brown fox jumps over the fence." = False
 -}
 isPangram :: String -> Bool
-isPangram str = undefined
+isPangram str = and [elem aCh (toLowerStr str) | aCh <- ['a'..'z']]
+    where
+        toLowerStr str = [(toLower ch) | ch <- str]
 
 
 -- main функция с примерни извиквания на функциите от задачите.
 main :: IO()
 main = do
+    
     -- Задача 1.
     print $ filterPrimePositions [1, 2, 3]
     print $ filterPrimePositions [2, 3, 4, 5, 6, 7]
+    
 
+    
     -- Задача 2.
     print $ countMinimum [1, 2, 1, 1, 5, 3]
     print $ countMinimum [3, 4, 2]
     print $ countMinimum []
+    
 
+    
     -- Задача 3.
     print $ title "the souND aND tHe fuRY"
+    
 
+    
     -- Задача 4.
     print $ images (\x -> x * x) (\x -> x + 2) [(2, 2), (1, 2), (3, 7)]
+    
 
+    
     -- Задача 5.
     print $ isIterator (+2) [1, 3, 5]
     print $ isIterator (+2) [1, 3, 4]
+    
 
+    
     -- Задача 6.
     print $ isPangram "The quick brown fox jumps over the lazy dog."
     print $ isPangram "The quick brown fox jumps over the fence."
