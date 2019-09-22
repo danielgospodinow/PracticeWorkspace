@@ -1,6 +1,10 @@
 #ifndef LINKED_LIST_LINKED_LIST_HPP
 #define LINKED_LIST_LINKED_LIST_HPP
 
+#include <bits/exception.h>
+#include <iostream>
+#include <stdexcept>
+
 template<typename T>
 struct Node {
     explicit Node(T elem) {
@@ -55,34 +59,26 @@ LinkedList<T>::LinkedList():
  */
 template<typename T>
 void LinkedList<T>::add(const T &item) {
-    //TODO: Make use of _tail
-
     // Create a box which wraps the new element.
     auto *const newNode = new Node<T>(item);
 
     if (!_head) {
         // If the head is NULL then the data structure is empty,
         // so make the first element (the head) be the new element.
+        // Do the same for the tail element.
         _head = newNode;
+        _tail = newNode;
 
         // Increase the size of the data structure.
         ++_size;
     } else {
         // If the head is not null, then we have some elements
-        // to work with.
+        // to work with and also the tail is not null.
 
-        // Create a temporary variable with which we'll iterate
-        // through all elements.
-        Node<T> *iter = _head;
-
-        // Iterate through all elements util reaching the last element.
-        while (iter->next) {
-            iter = iter->next;
-        }
-
-        // Set the new element to be current last element's next item,
-        // thus making it the new last element.
-        iter->next = newNode;
+        // Attach the new node to the last element (the tail) and
+        // make it the new tail.
+        _tail->next = newNode;
+        _tail = newNode;
 
         // Increase the size of the data structure.
         ++_size;
@@ -196,6 +192,14 @@ void LinkedList<T>::remove(const T &item) {
             // If the current element is the first element in the data structure,
             // then move the head with one position to the right.
             if (curr == _head) {
+
+                // Check whether the head is equal to the tail.
+                // If so, move the tail, essentially making it null.
+                if (_head == _tail) {
+                    _tail = _tail->next;
+                }
+
+                // Move the head element.
                 _head = _head->next;
             }
 
@@ -205,11 +209,18 @@ void LinkedList<T>::remove(const T &item) {
                 prev->next = curr->next;
             }
 
-            // Connect the current element's previous with the next element
-            // in the data structure and delete the current one.
-            Node<T> *temp = curr;
-            curr = curr->next;
-            delete temp;
+            if (curr == _tail) {
+                // If we happen to remove the last element,
+                // we should make the previous element the tail.
+                _tail = prev;
+                delete curr;
+            } else {
+                // Connect the current element's previous with the next element
+                // in the data structure and delete the current one.
+                Node<T> *temp = curr;
+                curr = curr->next;
+                delete temp;
+            }
 
             // Reduce the size of the data structure.
             --_size;
@@ -253,6 +264,12 @@ void LinkedList<T>::removeAt(const int index) {
             // If both consecutive elements exist this means
             // that we're surely somewhere after the first
             // element.
+
+            // Check whether we're trying to delete the last element.
+            // If so, make the previous the new tail.
+            if(iter == _tail) {
+                _tail = prev;
+            }
 
             // Break the connection between the two consecutive
             // elements and make the first one point to the

@@ -134,6 +134,7 @@ void ArrayList<T>::remove(const T &item) {
     for (int i = 0; i < _size; ++i) {
         if (_array[i] == item) {
             removeAt(i);
+            --i;
         }
     }
 }
