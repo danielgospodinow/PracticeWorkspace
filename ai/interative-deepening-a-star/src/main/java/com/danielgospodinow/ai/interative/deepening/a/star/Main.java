@@ -1,6 +1,7 @@
 package com.danielgospodinow.ai.interative.deepening.a.star;
 
-import com.danielgospodinow.ai.interative.deepening.a.star.graph.GraphState;
+import com.danielgospodinow.ai.interative.deepening.a.star.graph.NodeState;
+import com.danielgospodinow.ai.interative.deepening.a.star.graph.Puzzle;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -15,21 +16,19 @@ public class Main {
         int fieldSize = (int) Math.round(Math.sqrt(totalBlocks));
 
         List<String> lines = readGraphStateLines(scanner, fieldSize);
-        List<Integer> initialGraphStateInput = parseInitialGraphState(lines);
+        Puzzle initialGraphStateInput = parseInitialGraphState(lines);
 
-        GraphState initialGraphState = new GraphState(initialGraphStateInput);
-
-        PriorityQueue<GraphState> graphStates = new PriorityQueue<>(Collections.reverseOrder());
-        graphStates.add(initialGraphState);
-
+        NodeState initialNodeState = new NodeState(initialGraphStateInput, zeroIndex, 0);
 
     }
 
-    private static List<Integer> parseInitialGraphState(List<String> lines) {
-        return lines.stream()
+    private static Puzzle parseInitialGraphState(List<String> lines) {
+        List<Integer> inputNumbers = lines.stream()
                 .map(line -> line.split(" "))
                 .flatMapToInt(line -> Arrays.stream(line).mapToInt(Integer::parseInt))
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
+        return new Puzzle(inputNumbers);
     }
 
     private static List<String> readGraphStateLines(Scanner scanner, int linesSize) {
