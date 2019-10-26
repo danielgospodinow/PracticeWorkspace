@@ -38,7 +38,7 @@ public class Graph {
 
         if (currentNode.equals(goalNode)) {
             System.out.println(Arrays.toString(currentNode.getPuzzle().getPuzzleNumbers().toArray()));
-            return totalMoves + 1;
+            return totalMoves;
         }
 
         visited.add(currentNode);
@@ -64,7 +64,7 @@ public class Graph {
             return childrenResults.stream()
                     .filter(answer -> answer < 0)
                     .max(Comparator.naturalOrder())
-                    .get();
+                    .orElse(Integer.MAX_VALUE);
         }
     }
 
