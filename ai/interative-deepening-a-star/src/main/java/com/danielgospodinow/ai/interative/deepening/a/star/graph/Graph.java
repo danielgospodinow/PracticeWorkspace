@@ -8,15 +8,7 @@ import java.util.stream.Collectors;
 
 public class Graph {
 
-    private Puzzle initialState;
-    private Puzzle finalState;
-
-    public Graph(Puzzle initialState, Puzzle finalState) {
-        this.initialState = initialState;
-        this.finalState = finalState;
-    }
-
-    public int getShortestPathToSolution() {
+    public static int getShortestPathToSolution(Puzzle initialState, Puzzle finalState) {
         NodeState initialNodeState = new NodeState(initialState);
         NodeState finalNodeState = new NodeState(finalState);
 
@@ -33,7 +25,7 @@ public class Graph {
         }
     }
 
-    private int iterativeDeepeningAStar(NodeState currentNode, NodeState goalNode, int totalMoves, int errorLimit, List<NodeState> visited) {
+    private static int iterativeDeepeningAStar(NodeState currentNode, NodeState goalNode, int totalMoves, int errorLimit, List<NodeState> visited) {
         if (visited.contains(currentNode)) {
             return Integer.MAX_VALUE;
         }
@@ -64,7 +56,7 @@ public class Graph {
         visited.remove(currentNode);
 
         List<Integer> positiveAnswers = childrenResults.stream().filter(answer -> answer > 0).collect(Collectors.toList());
-        if(positiveAnswers.size() > 0) {
+        if (positiveAnswers.size() > 0) {
             return positiveAnswers.stream()
                     .min(Comparator.naturalOrder())
                     .get();
@@ -74,5 +66,9 @@ public class Graph {
                     .max(Comparator.naturalOrder())
                     .get();
         }
+    }
+
+    private Graph() {
+
     }
 }

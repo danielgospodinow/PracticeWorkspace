@@ -1,7 +1,6 @@
 package com.danielgospodinow.ai.interative.deepening.a.star;
 
 import com.danielgospodinow.ai.interative.deepening.a.star.graph.Graph;
-import com.danielgospodinow.ai.interative.deepening.a.star.graph.NodeState;
 import com.danielgospodinow.ai.interative.deepening.a.star.graph.Puzzle;
 
 import java.util.ArrayList;
@@ -28,8 +27,7 @@ public class Main {
         Puzzle finalState = new Puzzle(new ArrayList<>(finalStateArray));
         Puzzle initialState = new Puzzle(parseInitialGraphState(readGraphStateLines(scanner, fieldSize)));
 
-        Graph graph = new Graph(initialState, finalState);
-        System.out.println(graph.getShortestPathToSolution());
+        System.out.println(Graph.getShortestPathToSolution(initialState, finalState));
     }
 
     private static List<Integer> parseInitialGraphState(List<String> lines) {
