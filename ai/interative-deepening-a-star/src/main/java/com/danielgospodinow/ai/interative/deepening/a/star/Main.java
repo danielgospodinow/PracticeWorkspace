@@ -1,10 +1,16 @@
 package com.danielgospodinow.ai.interative.deepening.a.star;
 
+import com.danielgospodinow.ai.interative.deepening.a.star.graph.Graph;
 import com.danielgospodinow.ai.interative.deepening.a.star.graph.NodeState;
 import com.danielgospodinow.ai.interative.deepening.a.star.graph.Puzzle;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -15,20 +21,22 @@ public class Main {
         int zeroIndex = Integer.parseInt(scanner.nextLine());
         int fieldSize = (int) Math.round(Math.sqrt(totalBlocks));
 
-        List<String> lines = readGraphStateLines(scanner, fieldSize);
-        Puzzle initialGraphStateInput = parseInitialGraphState(lines);
+        List<Integer> finalStateArray = Stream.iterate(1, n -> n + 1)
+                .limit(totalBlocks - 1)
+                .collect(Collectors.toList());
+        finalStateArray.add(zeroIndex == -1 ? totalBlocks - 1 : zeroIndex, 0);
+        Puzzle finalState = new Puzzle(new ArrayList<>(finalStateArray));
+        Puzzle initialState = new Puzzle(parseInitialGraphState(readGraphStateLines(scanner, fieldSize)));
 
-        NodeState initialNodeState = new NodeState(initialGraphStateInput, zeroIndex, 0);
-
+        Graph graph = new Graph(initialState, finalState);
+        System.out.println(graph.getShortestPathToSolution());
     }
 
-    private static Puzzle parseInitialGraphState(List<String> lines) {
-        List<Integer> inputNumbers = lines.stream()
+    private static List<Integer> parseInitialGraphState(List<String> lines) {
+        return lines.stream()
                 .map(line -> line.split(" "))
                 .flatMapToInt(line -> Arrays.stream(line).mapToInt(Integer::parseInt))
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
-
-        return new Puzzle(inputNumbers);
     }
 
     private static List<String> readGraphStateLines(Scanner scanner, int linesSize) {

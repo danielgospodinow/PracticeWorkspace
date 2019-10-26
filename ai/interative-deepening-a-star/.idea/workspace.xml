@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a3c04617-0688-441a-b289-a427412eaeef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/graph/Graph.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/graph/Position.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interative-deepening-a-star.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/graph/GraphState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/graph/NodeState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/graph/NodeState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/graph/NodeState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/graph/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/danielgospodinow/ai/interative/deepening/a/star/graph/Puzzle.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -111,7 +110,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

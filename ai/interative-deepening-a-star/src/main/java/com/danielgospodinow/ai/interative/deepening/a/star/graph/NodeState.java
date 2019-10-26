@@ -5,22 +5,31 @@ import java.util.List;
 public class NodeState {
 
     private Puzzle puzzle;
-    private int indexOfZero;
-    private int distance;
 
-    public NodeState(Puzzle puzzle, int indexOfZero, int distance) {
+    public NodeState(Puzzle puzzle) {
         this.puzzle = puzzle;
-        this.indexOfZero = indexOfZero;
-        this.distance = distance;
     }
 
     public List<NodeState> getNeighbours() {
-
-
-        return null;
+        return puzzle.generateZeroItemPosibilities();
     }
 
-    public int getError() {
-        return puzzle.getError() + distance;
+    public int getError(Puzzle referencePuzzle, int distance) {
+        return puzzle.getDifference(referencePuzzle) + distance;
+    }
+
+    public Puzzle getPuzzle() {
+        return puzzle;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) {
+            return false;
+        } else if(!(obj instanceof NodeState)) {
+            return false;
+        } else {
+            return puzzle.getPuzzleNumbers().equals(((NodeState) obj).getPuzzle().getPuzzleNumbers());
+        }
     }
 }
