@@ -1,7 +1,6 @@
 package com.danielgospodinow.ai.interative.deepening.a.star.graph;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,12 +36,12 @@ public class Graph {
         }
 
         if (currentNode.equals(goalNode)) {
-            System.out.println(Arrays.toString(currentNode.getPuzzle().getPuzzleNumbers().toArray()));
+            visited.add(currentNode);
+            printSteps(visited);
             return totalMoves;
         }
 
         visited.add(currentNode);
-        System.out.println(Arrays.toString(currentNode.getPuzzle().getPuzzleNumbers().toArray()));
 
         List<NodeState> children = currentNode.getNeighbours();
         List<Integer> childrenResults = new ArrayList<>();
@@ -65,6 +64,29 @@ public class Graph {
                     .filter(answer -> answer < 0)
                     .max(Comparator.naturalOrder())
                     .orElse(Integer.MAX_VALUE);
+        }
+    }
+
+    private static void printSteps(List<NodeState> path) {
+        for (int i = 0; i < path.size() - 1; ++i) {
+            System.out.println(getMove(path.get(i), path.get(i + 1)));
+        }
+    }
+
+    private static String getMove(NodeState initial, NodeState goal) {
+        Position zeroPositionOfInitialMatrix = initial.getPuzzle().getMatrixNumberPosition(0);
+        Position zeroPositionOfGoalMatrix = goal.getPuzzle().getMatrixNumberPosition(0);
+
+        if (new Position(zeroPositionOfInitialMatrix.getX() + 1, zeroPositionOfInitialMatrix.getY()).equals(zeroPositionOfGoalMatrix)) {
+            return "up";
+        } else if (new Position(zeroPositionOfInitialMatrix.getX() - 1, zeroPositionOfInitialMatrix.getY()).equals(zeroPositionOfGoalMatrix)) {
+            return "down";
+        } else if (new Position(zeroPositionOfInitialMatrix.getX(), zeroPositionOfInitialMatrix.getY() + 1).equals(zeroPositionOfGoalMatrix)) {
+            return "left";
+        } else if (new Position(zeroPositionOfInitialMatrix.getX(), zeroPositionOfInitialMatrix.getY() - 1).equals(zeroPositionOfGoalMatrix)) {
+            return "right";
+        } else {
+            return "invalid";
         }
     }
 
