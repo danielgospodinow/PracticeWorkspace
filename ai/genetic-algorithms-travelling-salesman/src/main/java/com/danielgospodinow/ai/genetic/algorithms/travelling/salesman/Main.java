@@ -1,5 +1,6 @@
 package com.danielgospodinow.ai.genetic.algorithms.travelling.salesman;
 
+import com.danielgospodinow.ai.genetic.algorithms.travelling.salesman.utils.Route;
 import com.danielgospodinow.ai.genetic.algorithms.travelling.salesman.utils.World;
 
 import java.util.Scanner;

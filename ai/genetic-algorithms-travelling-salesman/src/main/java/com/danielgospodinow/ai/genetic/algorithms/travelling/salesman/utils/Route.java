@@ -22,17 +22,29 @@ public class Route implements Comparable<Route> {
     }
 
     private List<City> route;
+    private double fitness;
 
     public Route(List<City> cities) {
-        cities.add(cities.get(0));
         this.route = cities;
+    }
+
+    public double getFitness() {
+        if(fitness == 0) {
+            fitness = 1 / (double) getTotalTravelDistance();
+        }
+
+        return fitness;
     }
 
     public int getTotalTravelDistance() {
         return Stream.iterate(0, n -> n + 1)
                 .limit(route.size() - 1)
                 .map(iteration -> City.getDistanceBetweenCities(route.get(iteration), route.get(iteration + 1)))
-                .reduce(0, Integer::sum);
+                .reduce(0, Integer::sum) + City.getDistanceBetweenCities(route.get(0), route.get(route.size() - 1));
+    }
+
+    public List<City> getRouteCities() {
+        return route;
     }
 
     @Override
@@ -44,6 +56,6 @@ public class Route implements Comparable<Route> {
 
     @Override
     public int compareTo(Route route) {
-        return this.getTotalTravelDistance() - route.getTotalTravelDistance();
+        return Double.compare(route.getFitness(), this.getFitness());
     }
 }
