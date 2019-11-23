@@ -12,28 +12,52 @@ public class TicTacToeGame {
 
     }
 
-    public void start() {
+    public void start(boolean humanFirst) {
         Scanner scanner = new Scanner(System.in);
 
-        while(board.getState() == GameState.UNFINISHED) {
-            System.out.println("Enter position: ");
-            String[] position = scanner.nextLine().split(",");
-            Position inputPosition = new Position(Integer.parseInt(position[0]) - 1,
-                    Integer.parseInt(position[1]) - 1);
-            board.setMarker(GameMarker.X, inputPosition);
+        if(humanFirst) {
+            while (board.getState() == GameState.UNFINISHED) {
+                System.out.println("Enter position: ");
+                String[] position = scanner.nextLine().split(",");
+                Position inputPosition = new Position(Integer.parseInt(position[0]) - 1,
+                        Integer.parseInt(position[1]) - 1);
+                board.setMarker(GameMarker.X, inputPosition);
 
-            board.print();
-            System.out.println();
+                board.print();
+                System.out.println();
 
-            if(board.getState() == GameState.UNFINISHED) {
-                Position aiPosition = TicTacToe.getNextMoveFromAI(board, GameMarker.O);
-                board.setMarker(GameMarker.O, aiPosition);
+                if (board.getState() == GameState.UNFINISHED) {
+                    Position aiPosition = TicTacToe.getNextMoveFromAI(board, GameMarker.O);
+                    board.setMarker(GameMarker.O, aiPosition);
+
+                    System.out.println("AI moves:");
+                    board.print();
+                    System.out.println();
+                } else {
+                    break;
+                }
+            }
+        } else {
+            while (board.getState() == GameState.UNFINISHED) {
+                Position aiPosition = TicTacToe.getNextMoveFromAI(board, GameMarker.X);
+                board.setMarker(GameMarker.X, aiPosition);
 
                 System.out.println("AI moves:");
                 board.print();
                 System.out.println();
-            } else {
-                break;
+
+                if (board.getState() == GameState.UNFINISHED) {
+                    System.out.println("Enter position: ");
+                    String[] position = scanner.nextLine().split(",");
+                    Position inputPosition = new Position(Integer.parseInt(position[0]) - 1,
+                            Integer.parseInt(position[1]) - 1);
+                    board.setMarker(GameMarker.O, inputPosition);
+
+                    board.print();
+                    System.out.println();
+                } else {
+                    break;
+                }
             }
         }
 
@@ -49,10 +73,10 @@ public class TicTacToeGame {
                 System.out.println("Even!");
                 break;
             case X_WIN:
-                System.out.println("Player 1 won!");
+                System.out.println("X won!");
                 break;
             case O_WIN:
-                System.out.println("Player 2 won!");
+                System.out.println("O won!");
                 break;
             default: throw new RuntimeException("Something odd happened");
         }
