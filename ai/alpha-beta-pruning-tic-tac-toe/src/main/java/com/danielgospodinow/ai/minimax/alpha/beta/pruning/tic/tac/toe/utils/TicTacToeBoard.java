@@ -58,11 +58,11 @@ public class TicTacToeBoard {
         }
 
         // Check for a win in the cols for each row
-        for (int i = 0; i < BOARD_SIZE - 1; ++i) {
+        for (int i = 0; i < BOARD_SIZE; ++i) {
             boolean isWinningState = true;
             GameMarker winningMarker = board[0][i];
-            for (int j = 0; j < BOARD_SIZE; ++j) {
-                if (board[j][i] == NONE || board[j][i] != board[j][i + 1]) {
+            for (int j = 0; j < BOARD_SIZE - 1; ++j) {
+                if(board[j][i] != board[j + 1][i]) {
                     isWinningState = false;
                     break;
                 }
@@ -77,21 +77,55 @@ public class TicTacToeBoard {
             }
         }
 
+        // Check for main diagonal
+        boolean isWinningStateMainDiag = true;
+        GameMarker winningMarkerMainDiag = board[0][0];
+        for (int i = 0; i < BOARD_SIZE - 1; ++i) {
+            if (board[i][i] != board[i + 1][i + 1]) {
+                isWinningStateMainDiag = false;
+                break;
+            }
+        }
+        if (isWinningStateMainDiag) {
+            if (winningMarkerMainDiag == X) {
+                return X_WIN;
+            } else if (winningMarkerMainDiag == O) {
+                return O_WIN;
+            }
+        }
+
+        // Check for reverse diagonal
+        boolean isWinningStateReverseDiag = true;
+        GameMarker winningMarkerReverseDiag = board[0][BOARD_SIZE - 1];
+        for (int i = 0; i < BOARD_SIZE - 1; ++i) {
+            if (board[i][(BOARD_SIZE - 1) - i] != board[i + 1][(BOARD_SIZE - 1) - (i + 1)]) {
+                isWinningStateReverseDiag = false;
+                break;
+            }
+        }
+        if (isWinningStateReverseDiag) {
+            if (winningMarkerReverseDiag == X) {
+                return X_WIN;
+            } else if (winningMarkerReverseDiag == O) {
+                return O_WIN;
+            }
+        }
+
         // Check for an even
         boolean isEven = true;
         for (int i = 0; i < BOARD_SIZE; ++i) {
-            if(!isEven) {
+            if (!isEven) {
                 break;
             }
 
             for (int j = 0; j < BOARD_SIZE; ++j) {
-                if(board[i][j] == NONE) {
+                if (board[i][j] == NONE) {
                     isEven = false;
                     break;
                 }
             }
         }
-        if(isEven) {
+        if (isEven) {
             return EVEN;
         }
 
@@ -111,9 +145,9 @@ public class TicTacToeBoard {
     public List<Position> getFreeSpaces() {
         List<Position> freeSpaces = new ArrayList<>();
 
-        for(int i=0; i<BOARD_SIZE; ++i) {
-            for(int j=0; j<BOARD_SIZE; ++j) {
-                if(board[i][j] == NONE) {
+        for (int i = 0; i < BOARD_SIZE; ++i) {
+            for (int j = 0; j < BOARD_SIZE; ++j) {
+                if (board[i][j] == NONE) {
                     freeSpaces.add(new Position(i, j));
                 }
             }
