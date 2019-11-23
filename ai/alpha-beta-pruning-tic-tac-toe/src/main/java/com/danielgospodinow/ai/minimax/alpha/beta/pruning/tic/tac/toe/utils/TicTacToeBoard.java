@@ -1,5 +1,6 @@
 package com.danielgospodinow.ai.minimax.alpha.beta.pruning.tic.tac.toe.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.danielgospodinow.ai.minimax.alpha.beta.pruning.tic.tac.toe.utils.GameMarker.*;
@@ -57,10 +58,10 @@ public class TicTacToeBoard {
         }
 
         // Check for a win in the cols for each row
-        for (int i = 0; i < BOARD_SIZE; ++i) {
+        for (int i = 0; i < BOARD_SIZE - 1; ++i) {
             boolean isWinningState = true;
             GameMarker winningMarker = board[0][i];
-            for (int j = 0; j < BOARD_SIZE - 1; ++j) {
+            for (int j = 0; j < BOARD_SIZE; ++j) {
                 if (board[j][i] == NONE || board[j][i] != board[j][i + 1]) {
                     isWinningState = false;
                     break;
@@ -107,11 +108,17 @@ public class TicTacToeBoard {
         System.out.println();
     }
 
-    public int getSize() {
-        return BOARD_SIZE;
-    }
-
     public List<Position> getFreeSpaces() {
-        return null;
+        List<Position> freeSpaces = new ArrayList<>();
+
+        for(int i=0; i<BOARD_SIZE; ++i) {
+            for(int j=0; j<BOARD_SIZE; ++j) {
+                if(board[i][j] == NONE) {
+                    freeSpaces.add(new Position(i, j));
+                }
+            }
+        }
+
+        return freeSpaces;
     }
 }
