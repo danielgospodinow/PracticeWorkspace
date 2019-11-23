@@ -62,7 +62,7 @@ public class TicTacToeBoard {
             boolean isWinningState = true;
             GameMarker winningMarker = board[0][i];
             for (int j = 0; j < BOARD_SIZE - 1; ++j) {
-                if(board[j][i] != board[j + 1][i]) {
+                if(board[i][j] == NONE || board[j][i] != board[j + 1][i]) {
                     isWinningState = false;
                     break;
                 }
