@@ -8,9 +8,9 @@ public class TicTacToe {
     public static Position getNextMoveFromAI(TicTacToeBoard board, GameMarker aiMarker) {
         TreeMap<Integer, Position> possibleMoves = new TreeMap<>();
         board.getFreeSpaces().forEach(freeSpace -> {
-            TicTacToeBoard boardCopy = new TicTacToeBoard(board);
-            boardCopy.setMarker(aiMarker, freeSpace);
+            board.setMarker(aiMarker, freeSpace);
             int score = minimax(board, aiMarker, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            board.setMarker(GameMarker.NONE, freeSpace);
 
             possibleMoves.putIfAbsent(score, freeSpace);
         });
@@ -41,15 +41,15 @@ public class TicTacToe {
                 throw new RuntimeException("Something odd happened");
             }
         } else {
-            if(marker == GameMarker.O) {
+            if(marker == GameMarker.X) {
                 // Maximizing
                 int bestScore = Integer.MIN_VALUE;
 
                 List<Position> freeSpaces = board.getFreeSpaces();
                 for (Position freeSpace : freeSpaces) {
-                    TicTacToeBoard boardCopy = new TicTacToeBoard(board);
-                    boardCopy.setMarker(GameMarker.X, freeSpace);
-                    int score = minimax(boardCopy, GameMarker.X, depth + 1, alpha, beta);
+                    board.setMarker(GameMarker.X, freeSpace);
+                    int score = minimax(board, GameMarker.X, depth + 1, alpha, beta);
+                    board.setMarker(GameMarker.NONE, freeSpace);
 
                     bestScore = Math.max(bestScore, score);
                     alpha = Math.max(alpha, bestScore);
@@ -60,15 +60,15 @@ public class TicTacToe {
                 }
 
                 return bestScore;
-            } else if(marker == GameMarker.X) {
+            } else if(marker == GameMarker.O) {
                 // Minimizing
                 int bestScore = Integer.MAX_VALUE;
 
                 List<Position> freeSpaces = board.getFreeSpaces();
                 for (Position freeSpace : freeSpaces) {
-                    TicTacToeBoard boardCopy = new TicTacToeBoard(board);
-                    boardCopy.setMarker(GameMarker.O, freeSpace);
-                    int score = minimax(boardCopy, GameMarker.O, depth + 1, alpha, beta);
+                    board.setMarker(GameMarker.O, freeSpace);
+                    int score = minimax(board, GameMarker.O, depth + 1, alpha, beta);
+                    board.setMarker(GameMarker.NONE, freeSpace);
 
                     bestScore = Math.min(bestScore, score);
                     beta = Math.min(beta, bestScore);

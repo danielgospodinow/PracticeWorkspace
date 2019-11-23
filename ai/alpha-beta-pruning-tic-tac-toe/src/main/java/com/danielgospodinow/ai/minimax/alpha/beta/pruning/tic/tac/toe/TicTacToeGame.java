@@ -49,10 +49,10 @@ public class TicTacToeGame {
                 System.out.println("Even!");
                 break;
             case X_WIN:
-                System.out.println("Player1 won!");
+                System.out.println("Player 1 won!");
                 break;
             case O_WIN:
-                System.out.println("Player2 won!");
+                System.out.println("Player 2 won!");
                 break;
             default: throw new RuntimeException("Something odd happened");
         }
