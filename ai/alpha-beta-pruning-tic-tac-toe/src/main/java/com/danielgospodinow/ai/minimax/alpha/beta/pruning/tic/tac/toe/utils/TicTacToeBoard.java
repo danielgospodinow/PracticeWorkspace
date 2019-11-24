@@ -58,11 +58,11 @@ public class TicTacToeBoard {
         }
 
         // Check for a win in the cols for each row
-        for (int i = 0; i < BOARD_SIZE; ++i) {
+        for (int j = 0; j < BOARD_SIZE; ++j) {
             boolean isWinningState = true;
-            GameMarker winningMarker = board[0][i];
-            for (int j = 0; j < BOARD_SIZE - 1; ++j) {
-                if(board[i][j] == NONE || board[j][i] != board[j + 1][i]) {
+            GameMarker winningMarker = board[0][j];
+            for (int i = 0; i < BOARD_SIZE - 1; ++i) {
+                if(board[i][j] == NONE || board[i][j] != board[i + 1][j]) {
                     isWinningState = false;
                     break;
                 }
