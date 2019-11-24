@@ -81,7 +81,7 @@ public class TicTacToeBoard {
         boolean isWinningStateMainDiag = true;
         GameMarker winningMarkerMainDiag = board[0][0];
         for (int i = 0; i < BOARD_SIZE - 1; ++i) {
-            if (board[i][i] != board[i + 1][i + 1]) {
+            if (board[i][i] == NONE || board[i][i] != board[i + 1][i + 1]) {
                 isWinningStateMainDiag = false;
                 break;
             }
@@ -98,7 +98,7 @@ public class TicTacToeBoard {
         boolean isWinningStateReverseDiag = true;
         GameMarker winningMarkerReverseDiag = board[0][BOARD_SIZE - 1];
         for (int i = 0; i < BOARD_SIZE - 1; ++i) {
-            if (board[i][(BOARD_SIZE - 1) - i] != board[i + 1][(BOARD_SIZE - 1) - (i + 1)]) {
+            if (board[i][(BOARD_SIZE - 1) - i] == NONE || board[i][(BOARD_SIZE - 1) - i] != board[i + 1][(BOARD_SIZE - 1) - (i + 1)]) {
                 isWinningStateReverseDiag = false;
                 break;
             }
