@@ -14,6 +14,7 @@ public class Graph {
         int errorLimit = initialNodeState.getError(finalState, 0);
         while (true) {
             List<NodeState> visited = new ArrayList<>();
+            visited.add(initialNodeState);
             int result = iterativeDeepeningAStar(initialNodeState, finalNodeState, 0, errorLimit, visited);
 
             if (result < 0) {
@@ -25,10 +26,6 @@ public class Graph {
     }
 
     private static int iterativeDeepeningAStar(NodeState currentNode, NodeState goalNode, int totalMoves, int errorLimit, List<NodeState> visited) {
-        if (visited.contains(currentNode)) {
-            return Integer.MAX_VALUE;
-        }
-
         int currentNodeError = currentNode.getError(goalNode.getPuzzle(), totalMoves);
 
         if (currentNodeError > errorLimit) {
@@ -36,23 +33,20 @@ public class Graph {
         }
 
         if (currentNode.equals(goalNode)) {
-            visited.add(currentNode);
             printSteps(visited);
             return totalMoves;
         }
-
-        visited.add(currentNode);
 
         List<NodeState> children = currentNode.getNeighbours();
         List<Integer> childrenResults = new ArrayList<>();
 
         for (NodeState child : children) {
             if (!visited.contains(child)) {
+                visited.add(child);
                 childrenResults.add(iterativeDeepeningAStar(child, goalNode, totalMoves + 1, errorLimit, visited));
+                visited.remove(child);
             }
         }
-
-        visited.remove(currentNode);
 
         List<Integer> positiveAnswers = childrenResults.stream().filter(answer -> answer > 0).collect(Collectors.toList());
         if (positiveAnswers.size() > 0) {
@@ -63,7 +57,7 @@ public class Graph {
             return childrenResults.stream()
                     .filter(answer -> answer < 0)
                     .max(Comparator.naturalOrder())
-                    .orElse(Integer.MAX_VALUE);
+                    .orElse(0);
         }
     }
 
