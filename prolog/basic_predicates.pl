@@ -1,5 +1,7 @@
 betw(A,A,B) :- A=<B.
-betw(X,A,B) :- A<B, A1 is A+1, betw(X,A1,B).
+betw(X,A,B) :- A<B, 
+    A1 is A+1, 
+    betw(X,A1,B).
 
 gen(0).
 gen(N) :- gen(M), N is M+1.
@@ -41,3 +43,12 @@ genks(K, S, [XI|R]) :- K>1,
     betw(XI, 0, S),
     S1 is S - XI,
     genks(K1,S1,R).
+
+rng(A,B,[]) :- A > B.
+rng(A,B,[A|R]) :- A =< B,
+    A1 is A+1,
+    rng(A1,B,R).
+
+toSet([], []).
+toSet([HL|L],[HL|S]) :- not(membr(HL, L)), toSet(L,S).
+toSet([HL|L],S) :- membr(HL, L), toSet(L,S).
