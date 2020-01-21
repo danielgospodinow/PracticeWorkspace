@@ -52,3 +52,10 @@ rng(A,B,[A|R]) :- A =< B,
 toSet([], []).
 toSet([HL|L],[HL|S]) :- not(membr(HL, L)), toSet(L,S).
 toSet([HL|L],S) :- membr(HL, L), toSet(L,S).
+
+select(X,L,L1) :- appnd(A,[X|B],L),
+    appnd(A,B,L1).
+
+perm([],[]).
+perm(L,[HR|TR]) :- select(HR,L,L1),
+    perm(L1,TR).
