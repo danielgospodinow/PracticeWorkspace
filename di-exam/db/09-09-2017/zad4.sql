@@ -1,0 +1,10 @@
+-- Б) или Г)
+
+SELECT CLASS, COUNT(DISTINCT NAME) FROM SHIPS s
+JOIN OUTCOMES o ON s.NAME=o.SHIP
+WHERE result='sunk' AND CLASS IN
+    (SELECT c.class FROM CLASSES c
+        JOIN SHIPS s ON c.class=s.CLASS
+        GROUP BY c.class
+        HAVING COUNT(name) > 5)
+GROUP BY CLASS;

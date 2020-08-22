@@ -1,0 +1,7 @@
+select CLASSES.CLASS, YEAR(MIN(B.DATE)) as SEFTE_DATE, YEAR(MAX(B.DATE)) as LAST_DATE, COUNT(distinct B.NAME) as CNT
+from CLASSES
+join SHIPS S on CLASSES.CLASS = S.CLASS
+left join OUTCOMES O on S.NAME = O.SHIP
+left join BATTLES B on O.BATTLE = B.NAME
+where S.CLASS like 'N%'
+group by CLASSES.CLASS;
