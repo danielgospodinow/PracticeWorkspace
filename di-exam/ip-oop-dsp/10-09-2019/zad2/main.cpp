@@ -75,7 +75,7 @@ int branchValue(vector<int> branch) {
     return ret;
 }
 
-void commonBranches(Tree const& t, int u, int v, int k) {
+void commonBranchesNaive(Tree const& t, int u, int v, int k) {
     vector<vector<int>> uBranches;
     vector<int> uTempBranch;
     
@@ -99,6 +99,39 @@ void commonBranches(Tree const& t, int u, int v, int k) {
         }
     }
 }
+
+void commonBranchesRecurHelper(Tree const& t, int u, int v, int k, string s) {
+    if(t.getChildrenOfVertex(u).size() == 0 && t.getChildrenOfVertex(v).size() == 0) {
+        if(k - (u + v) == 0) {
+            cout << s << endl;
+        } else {
+            return;
+        }
+    }
+    
+    if(t.getChildrenOfVertex(u).size() == 0 || t.getChildrenOfVertex(v).size() == 0) {
+        return;
+    }
+    
+    for(int i=0; i<t.getChildrenOfVertex(u).size(); ++i) {
+        char currentUChar = t.getEdges().at(pair<int,int>(u, t.getChildrenOfVertex(u).at(i)));
+        
+        for(int j=0; j<t.getChildrenOfVertex(v).size(); ++j) {
+            for(int vChild : t.getChildrenOfVertex(v)) {
+                if(t.getEdges().at(pair<int,int>(v, vChild)) == currentUChar) {
+                    s += currentUChar;
+                    commonBranchesRecurHelper(t, t.getChildrenOfVertex(u).at(i), vChild, (k - (u + v)), s);
+                    s.pop_back();
+                }
+            }
+        }
+    }
+}
+
+void commonBranches(Tree const& t, int u, int v, int k) {
+    commonBranchesRecurHelper(t, u, v, k, "");
+}
+
 
 int main(int argc, const char * argv[]) {
     map<int, vector<int>> t;
